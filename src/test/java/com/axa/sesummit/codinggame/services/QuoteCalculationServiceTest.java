@@ -5,6 +5,7 @@ import com.axa.sesummit.codinggame.model.QuoteRequest;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 public class QuoteCalculationServiceTest {
@@ -16,8 +17,8 @@ public class QuoteCalculationServiceTest {
 	@Test
 	public void calculateQuote() throws Exception {
 		final String country = "DE";
-		final String departureDate = "2016-11-15";
-		final String returnDate = "2016-12-15";
+		final LocalDate departureDate = LocalDate.of(2016, 11, 15);
+		final LocalDate returnDate = LocalDate.of(2016, 12, 15);
 		final Integer[] travellerAges = { 32, 39 };
 		final String[] options = { "MedicalConditions" };
 

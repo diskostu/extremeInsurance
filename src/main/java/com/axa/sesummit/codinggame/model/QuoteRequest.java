@@ -1,17 +1,22 @@
 package com.axa.sesummit.codinggame.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @XmlRootElement
 public class QuoteRequest {
 
 	private String country;
 
-	private String departureDate;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate departureDate;
 
-	private String returnDate;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate returnDate;
 
 	private List<Integer> travellerAges;
 
@@ -23,7 +28,7 @@ public class QuoteRequest {
 
 	}
 
-	public QuoteRequest(String country, String departureDate, String returnDate, List<Integer> travellerAges,
+	public QuoteRequest(String country, LocalDate departureDate, LocalDate returnDate, List<Integer> travellerAges,
 			List<String> options, Cover cover) {
 		this.country = country;
 		this.departureDate = departureDate;
@@ -41,7 +46,7 @@ public class QuoteRequest {
 		this.cover = cover;
 	}
 
-	public void setDepartureDate(String departureDate) {
+	public void setDepartureDate(LocalDate departureDate) {
 		this.departureDate = departureDate;
 	}
 
@@ -49,7 +54,7 @@ public class QuoteRequest {
 		this.options = options;
 	}
 
-	public void setReturnDate(String returnDate) {
+	public void setReturnDate(LocalDate returnDate) {
 		this.returnDate = returnDate;
 	}
 
@@ -61,11 +66,11 @@ public class QuoteRequest {
 		return country;
 	}
 
-	public final String getDepartureDate() {
+	public final LocalDate getDepartureDate() {
 		return departureDate;
 	}
 
-	public final String getReturnDate() {
+	public final LocalDate getReturnDate() {
 		return returnDate;
 	}
 

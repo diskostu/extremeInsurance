@@ -18,9 +18,8 @@ public class QuoteCalculationService {
 	public Double calculateQuote(final QuoteRequest request) {
 		int numberOfTravellers = request.getTravellerAges().size();
 
-		LocalDate departure = LocalDate.parse(request.getDepartureDate(), FORMATTER);
-
-		LocalDate returnDate = LocalDate.parse(request.getReturnDate(), FORMATTER);
+		LocalDate departure = request.getDepartureDate();
+		LocalDate returnDate = request.getReturnDate();
 
 		long dateDiff = Math.abs(ChronoUnit.DAYS.between(returnDate, departure));
 
