@@ -30,6 +30,10 @@ public enum Country {
     }
 
     public static double getValueForCode(final String code) {
+        if (code == null || code.length() != 2) {
+            throw new IllegalArgumentException("Invalid country code: " + code);
+        }
+
         for (final Country country : Country.values()) {
             if (country.getCountryCode().equals(code)) {
                 return country.getValue();
