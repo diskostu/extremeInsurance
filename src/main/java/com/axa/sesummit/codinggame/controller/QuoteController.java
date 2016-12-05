@@ -40,10 +40,4 @@ public class QuoteController {
 
 		return response;
 	}
-
-	@ExceptionHandler(Throwable.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Request not allowed / misformed")
-	public void onError(Throwable t) {
-		LOG.info("Found error: " + t.getMessage(), t);
-	}
 }
