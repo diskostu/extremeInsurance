@@ -86,4 +86,12 @@ public class QuoteRequest {
 		return cover;
 	}
 
+	@Override
+	public String toString() {
+		return "QuoteRequest [country=" + country + ", departureDate=" + departureDate + ", returnDate=" + returnDate
+				+ ", travellerAges=" + travellerAges + ", options=" + options + ", cover=" + cover + "]";
+	}
+	
+	
+
 }

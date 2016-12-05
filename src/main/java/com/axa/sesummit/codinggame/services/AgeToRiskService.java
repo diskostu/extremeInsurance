@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AgeToRiskService {
-
+	
 	public Double getRiskForAge(int age) {
 		if (age < 18) {
 			return 1.1;

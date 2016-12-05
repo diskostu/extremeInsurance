@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.axa.sesummit.codinggame.model.Country;
 import com.axa.sesummit.codinggame.model.Option;
 import com.axa.sesummit.codinggame.model.QuoteRequest;
 
@@ -32,19 +33,38 @@ public class QuoteCalculationService {
 	public Double calculateQuote(final QuoteRequest request) {
 		// int numberOfTravellers = request.getTravellerAges().size();
 
+		LOG.info("Request for quote: " + request);
+
 		LocalDate departure = request.getDepartureDate();
 		LocalDate returnDate = request.getReturnDate();
 
 		long dateDiff = Math.abs(ChronoUnit.DAYS.between(returnDate, departure));
 
-		int sumOfRisks = request.getTravellerAges().stream().mapToInt(Integer::intValue).sum();
+		Double sumOfRisks = 0.0;
+
+		for (int age : request.getTravellerAges()) {
+			Double risk = ageToRiskService.getRiskForAge(age);
+
+			LOG.info("\tRISK: " + risk);
+
+			sumOfRisks += risk;
+		}
 
 		Double sumOfOptions = request.getOptions().stream().mapToDouble((s) -> Option.valueOf(s).getAmount()).sum();
-		// LOG.info(sumOfRisks + " - " + sumOfOptions);
-		// Options
 
-		// Country and Options
-		Double result = (request.getCover().getAmount() * 22.0 * sumOfRisks * dateDiff) + sumOfOptions;
+		Double country = Country.getValueForCode(request.getCountry());
+
+		if (dateDiff <= 7) {
+			dateDiff = 7;
+		}
+
+		LOG.info("Cover: " + request.getCover().getAmount());
+		LOG.info("Country:" + country);
+		LOG.info("SumOfRisks: " + sumOfRisks);
+		LOG.info("Diff: " + dateDiff);
+		LOG.info("SumOfOptions: " + sumOfOptions);
+
+		Double result = (request.getCover().getAmount() * country * sumOfRisks * dateDiff) + sumOfOptions;
 
 		return result;
 	}
