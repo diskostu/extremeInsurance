@@ -13,19 +13,19 @@ public class QuoteCalculationService {
 
 	public static final Double QUOTE_CONSTANT = 1.8;
 
-	public String calculateQuote(final QuoteRequest request) {
+	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+	public Double calculateQuote(final QuoteRequest request) {
 		int numberOfTravellers = request.getTravellerAges().size();
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate departure = LocalDate.parse(request.getDepartureDate(), FORMATTER);
 
-		LocalDate departure = LocalDate.parse(request.getDepartureDate(), formatter);
-
-		LocalDate returnDate = LocalDate.parse(request.getReturnDate(), formatter);
+		LocalDate returnDate = LocalDate.parse(request.getReturnDate(), FORMATTER);
 
 		long dateDiff = Math.abs(ChronoUnit.DAYS.between(returnDate, departure));
 
 		Double result = QUOTE_CONSTANT * numberOfTravellers * dateDiff;
 
-		return result.toString();
+		return result;
 	}
 }

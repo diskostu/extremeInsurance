@@ -17,14 +17,14 @@ public class QuoteRequest {
 
 	private List<String> options;
 
-	private String cover;
+	private Cover cover;
 
 	public QuoteRequest() {
 
 	}
 
 	public QuoteRequest(String country, String departureDate, String returnDate, List<Integer> travellerAges,
-			List<String> options, String cover) {
+			List<String> options, Cover cover) {
 		this.country = country;
 		this.departureDate = departureDate;
 		this.returnDate = returnDate;
@@ -37,7 +37,7 @@ public class QuoteRequest {
 		this.country = country;
 	}
 
-	public void setCover(String cover) {
+	public void setCover(final Cover cover) {
 		this.cover = cover;
 	}
 
@@ -77,7 +77,7 @@ public class QuoteRequest {
 		return options;
 	}
 
-	public final String getCover() {
+	public final Cover getCover() {
 		return cover;
 	}
 

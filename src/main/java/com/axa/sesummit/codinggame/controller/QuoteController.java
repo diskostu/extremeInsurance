@@ -31,9 +31,9 @@ public class QuoteController {
 		LOG.info("Incoming request: " + request.toString());
 		QuoteResponse response = new QuoteResponse();
 
-		String quote = qcs.calculateQuote(request);
+		Double quote = qcs.calculateQuote(request);
 
-		response.setQuote(Double.valueOf(quote));
+		response.setQuote(quote);
 
 		return response;
 	}
