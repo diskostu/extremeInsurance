@@ -12,7 +12,7 @@ public class RestExceptionHandler {
 
 	public static final Logger LOG = LoggerFactory.getLogger(RestExceptionHandler.class);
 
-	@ExceptionHandler(Throwable.class)
+	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Request not allowed / misformed")
 	public void onError(Throwable t) {
 		LOG.info("Found error: " + t.getMessage(), t);

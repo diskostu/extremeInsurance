@@ -4,15 +4,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.axa.sesummit.codinggame.model.Country;
-import com.axa.sesummit.codinggame.model.Option;
-import com.axa.sesummit.codinggame.model.QuoteRequest;
+import com.axa.sesummit.codinggame.model.QuoteModel;
 
 @Service
 public class QuoteCalculationService {
@@ -30,7 +28,7 @@ public class QuoteCalculationService {
 		this.ageToRiskService = ageToRiskService;
 	}
 
-	public Double calculateQuote(final QuoteRequest request) {
+	public Double calculateQuote(final QuoteModel request) {
 		// int numberOfTravellers = request.getTravellerAges().size();
 
 		LOG.info("Request for quote: " + request);
@@ -50,7 +48,7 @@ public class QuoteCalculationService {
 			sumOfRisks += risk;
 		}
 
-		Double sumOfOptions = request.getOptions().stream().mapToDouble((s) -> Option.valueOf(s).getAmount()).sum();
+		Double sumOfOptions = request.getOptions().stream().mapToDouble((s) -> s.getAmount()).sum();
 
 		Double country = Country.getValueForCode(request.getCountry());
 

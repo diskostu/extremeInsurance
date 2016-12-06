@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.axa.sesummit.codinggame.model.QuoteModel;
 import com.axa.sesummit.codinggame.model.QuoteRequest;
 import com.axa.sesummit.codinggame.model.QuoteResponse;
 import com.axa.sesummit.codinggame.services.QuoteCalculationService;
@@ -30,11 +31,15 @@ public class QuoteController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public @ResponseBody QuoteResponse getQuote(@RequestBody final QuoteRequest request) {
+	public @ResponseBody QuoteResponse getQuote(@RequestBody final QuoteRequest request)
+			throws IllegalArgumentException {
 		LOG.info("Incoming request: " + request.toString());
+
+		QuoteModel model = QuoteModel.fromRequest(request);
+
 		QuoteResponse response = new QuoteResponse();
 
-		Double quote = qcs.calculateQuote(request);
+		Double quote = qcs.calculateQuote(model);
 
 		response.setQuote(quote);
 
