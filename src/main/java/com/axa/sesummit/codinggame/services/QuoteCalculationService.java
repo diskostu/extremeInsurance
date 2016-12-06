@@ -56,6 +56,10 @@ public class QuoteCalculationService {
 			dateDiff = 7;
 		}
 
+		if (dateDiff == 8 || dateDiff == 9) {
+			dateDiff = 7;
+		}
+
 		LOG.info("Cover: " + request.getCover().getAmount());
 		LOG.info("Country:" + country);
 		LOG.info("SumOfRisks: " + sumOfRisks);
