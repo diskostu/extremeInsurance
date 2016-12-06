@@ -6,17 +6,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class RomanPriceServiceImpl implements RomanPriceService {
 
+
     private enum RomanCharValue {
         // @formatter:off
-        I(1), II(2), III(3), IV(4.4 - 1), V(4.4),
-        VI(4.4 + 1), VII(4.4 + 1 + 1), VIII(4.4 + 1 + 1 + 1), IX(8.4 - 1), X(8.4),
-        XI(8.4+1), XII(8.4+1+1), XIII(8.4+1+1+1), XIV(8.4 + 4.4 - 1), XV(8.4 + 4.4),
-        XVI(8.4 + 4.4 + 1), XVII(8.4 + 4.4 + 1 + 1), XVIII(8.4 + 4.4 + 1 + 1 + 1),
+        I(1), II(2), III(3), IV(4.2 - 1), V(4.2),
+        VI(4.2 + 1), VII(4.2 + 1 + 1), VIII(4.2 + 1 + 1 + 1), IX(8.4 - 1), X(8.4),
+        XI(8.4+1), XII(8.4+1+1), XIII(8.4+1+1+1), XIV(8.4 + 4.2 - 1), XV(8.4 + 4.2),
+        XVI(8.4 + 4.2 + 1), XVII(8.4 + 4.2 + 1 + 1), XVIII(8.4 + 4.2 + 1 + 1 + 1),
         XIX(8.4 + 8.4 - 1), XX(8.4 + 8.4),
-        L(39);
+        L(42);
         // @formatter:on
-
-        //
 
         private double charValue;
 
