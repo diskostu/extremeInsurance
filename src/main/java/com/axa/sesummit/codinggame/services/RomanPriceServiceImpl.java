@@ -45,7 +45,11 @@ public class RomanPriceServiceImpl implements RomanPriceService {
     public Double romanPrice(Long days) {
         String romanNumerals = romanConv.toRomanNumerals(days.intValue());
 
-        return RomanCharValue.getEnumForString(romanNumerals).getCharValue();
+        if (days.intValue() <= 20) {
+            return RomanCharValue.getEnumForString(romanNumerals).getCharValue();
+        } else {
+            return getValueForRomanNumber(romanNumerals);
+        }
     }
 
     public Double romanPriceWithSubtraction(Long days) {
@@ -61,14 +65,6 @@ public class RomanPriceServiceImpl implements RomanPriceService {
         double sum = 0;
         for (int i = 0; i < length; i++) {
             String currentChar = splitString[i];
-
-
-
-            // last char
-            if (i == length - 1) {
-
-            }
-
             sum += RomanCharValue.getEnumForString(currentChar).charValue;
         }
 
