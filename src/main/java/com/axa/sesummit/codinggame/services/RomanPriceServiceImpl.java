@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RomanPriceServiceImpl implements RomanPriceService {
 
+
     private enum RomanCharValue {
         // @formatter:off
         I(1), II(2), III(3), IV(4.2 - 1), V(4.2),
