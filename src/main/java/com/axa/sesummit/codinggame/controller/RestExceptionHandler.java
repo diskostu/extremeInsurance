@@ -15,7 +15,7 @@ public class RestExceptionHandler {
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Request not allowed / misformed")
 	public void onError(Throwable t) {
-		LOG.info("Found error: " + t.getMessage(), t);
+		LOG.error("Found error: " + t.getMessage());
 	}
 
 }
