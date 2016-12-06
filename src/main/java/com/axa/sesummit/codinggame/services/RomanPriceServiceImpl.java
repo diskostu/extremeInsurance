@@ -6,69 +6,80 @@ import org.springframework.stereotype.Service;
 @Service
 public class RomanPriceServiceImpl implements RomanPriceService {
 
-	private enum RomanCharValue {
-		I(1), V(4.4), X(8.4), L(39);
+    private enum RomanCharValue {
+        // @formatter:off
+        I(1), II(2), III(3), IV(4.4 - 1), V(4.4),
+        VI(4.4 + 1), VII(4.4 + 1 + 1), VIII(4.4 + 1 + 1 + 1), IX(8.4 - 1), X(8.4),
+        XI(8.4+1), XII(8.4+1+1), XIII(8.4+1+1+1), XIV(8.4 + 4.4 - 1), XV(8.4 + 4.4),
+        XVI(8.4 + 4.4 + 1), XVII(8.4 + 4.4 + 1 + 1), XVIII(8.4 + 4.4 + 1 + 1 + 1),
+        XIX(8.4 + 8.4 - 1), XX(8.4 + 8.4),
+        L(39);
+        // @formatter:on
 
-		private double charValue;
+        //
 
-		RomanCharValue(double charValue) {
-			this.charValue = charValue;
-		}
+        private double charValue;
 
-		public static RomanCharValue getEnumForString(final String s) {
-			for (RomanCharValue romanCharValue : RomanCharValue.values()) {
-				if (romanCharValue.name().equals(s)) {
-					return romanCharValue;
-				}
-			}
+        RomanCharValue(double charValue) {
+            this.charValue = charValue;
+        }
 
-			return null;
-		}
+        public static RomanCharValue getEnumForString(final String s) {
+            for (RomanCharValue romanCharValue : RomanCharValue.values()) {
+                if (romanCharValue.name().equals(s)) {
+                    return romanCharValue;
+                }
+            }
 
-		public double getCharValue() {
-			return charValue;
-		}
-	}
+            return null;
+        }
 
-	private Converter romanConv = new Converter();
+        public double getCharValue() {
+            return charValue;
+        }
+    }
 
-	@Override
-	public Double romanPrice(Long days) {
-		String romanNumerals = romanConv.toRomanNumerals(days.intValue());
+    private Converter romanConv = new Converter();
 
-		String[] splitString = romanNumerals.split("");
-		int length = splitString.length;
+    @Override
+    public Double romanPrice(Long days) {
+        String romanNumerals = romanConv.toRomanNumerals(days.intValue());
 
-		double sum = 0;
-		for(int i = 0; i < length; i++) {
-			System.out.println("current char: " + splitString[i]);
-			System.out.println(RomanCharValue.getEnumForString(splitString[i]));
-			sum += RomanCharValue.getEnumForString(splitString[i]).charValue;
-		}
+        return RomanCharValue.getEnumForString(romanNumerals).getCharValue();
+    }
 
+    public Double romanPriceWithSubtraction(Long days) {
+        String romanNumerals = romanConv.toRomanNumerals(days.intValue());
 
-		return sum;
-	}
+        return getValueForRomanNumber(romanNumerals);
+    }
 
-	public Double romanPrice2(Long days) {
-		String romanNumerals = romanConv.toRomanNumerals(days.intValue());
-		char[] charArray = romanNumerals.toCharArray();
-		int length = charArray.length;
+    private double getValueForRomanNumber(final String romanNumber) {
+        String[] splitString = romanNumber.split("");
+        int length = splitString.length;
 
-		double sum = 0;
-		for(int i = 0; i < length; i++) {
-			System.out.println("current char: " + charArray[i]);
-
-		}
+        double sum = 0;
+        for (int i = 0; i < length; i++) {
+            String currentChar = splitString[i];
 
 
-		System.out.println(romanNumerals);
 
-		return 0.0;
-	}
+            // last char
+            if (i == length - 1) {
 
-	public static void main(String[] args) {
-		RomanPriceServiceImpl service = new RomanPriceServiceImpl();
-		service.romanPrice(new Long(11));
-	}
+            }
+
+            sum += RomanCharValue.getEnumForString(currentChar).charValue;
+        }
+
+
+        return 0.0;
+    }
+
+    public static void main(String[] args) {
+        RomanPriceServiceImpl service = new RomanPriceServiceImpl();
+        Double aDouble = service.romanPrice(new Long(11));
+
+        System.out.println("Result: " + aDouble);
+    }
 }
