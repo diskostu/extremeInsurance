@@ -62,21 +62,21 @@ public class QuoteCalculationService {
 
 		Double result = (request.getCover().getAmount() * country * sumOfRisks * romanPrice) + sumOfOptions;
 
-		if (getFamilyDiscount(travellerAges)) {
-			result = result * 0.8; // 20% Discount for Families
-		}
+		// if (getFamilyDiscount(travellerAges)) {
+		// result = result * 0.8; // 20% Discount for Families
+		// }
 
-		if (isChildrenCharge(travellerAges)) {
-			result = result * 1.15; // 15% Family charges
-		}
-
-		if (isYoungCouples(travellerAges) || isYoungAdultGroup(travellerAges)) {
-			result = result * 0.9; // 10% for young couples
-		}
-
-		if (isAlone(travellerAges)) {
-			result = result * 1.05; // 5% penalty for single person
-		}
+//		if (isChildrenCharge(travellerAges)) {
+//			result = result * 1.15; // 15% Family charges
+//		}
+//
+//		if (isYoungCouples(travellerAges) || isYoungAdultGroup(travellerAges)) {
+//			result = result * 0.9; // 10% for young couples
+//		}
+//
+//		if (isAlone(travellerAges)) {
+//			result = result * 1.05; // 5% penalty for single person
+//		}
 
 		return result;
 	}
