@@ -2,6 +2,7 @@ package com.axa.sesummit.codinggame.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,8 @@ public class QuoteModel {
 
 		return model;
 	}
+
+	private List<Double> discounts = new ArrayList<Double>();
 
 	private String country;
 
@@ -123,6 +126,20 @@ public class QuoteModel {
 
 	public final Cover getCover() {
 		return cover;
+	}
+
+	public List<Double> getDiscounts() {
+		return discounts;
+	}
+
+	public void setDiscounts(List<Double> discounts) {
+		this.discounts = discounts;
+	}
+
+	public void addDiscount(Double discount) {
+		if (discount != null) {
+			discounts.add(discount);
+		}
 	}
 
 	@Override
