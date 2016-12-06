@@ -1,16 +1,16 @@
 package com.axa.sesummit.codinggame.services;
 
-import com.axa.sesummit.codinggame.model.Country;
-import com.axa.sesummit.codinggame.model.QuoteModel;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
+import com.axa.sesummit.codinggame.model.Country;
+import com.axa.sesummit.codinggame.model.QuoteModel;
 
 @Service
 public class QuoteCalculationService {
