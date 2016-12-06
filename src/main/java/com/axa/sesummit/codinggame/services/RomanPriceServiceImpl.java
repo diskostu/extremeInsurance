@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 public class RomanPriceServiceImpl implements RomanPriceService {
 
 	@Override
-	public Double romanPrice(Integer days) {
+	public Double romanPrice(Long days) {
 		return 0.0;
 	}
 
