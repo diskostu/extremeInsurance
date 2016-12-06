@@ -22,7 +22,7 @@ public class RomanPriceServiceImplTest {
 
 		Double price = service.romanPrice(days);
 
-		Assert.isTrue(Double.valueOf(1.0).equals(price));
+		Assert.isTrue(Double.valueOf(1.0).equals(price), "Should return 1.0!");
 	}
 
 	@Test
@@ -31,7 +31,7 @@ public class RomanPriceServiceImplTest {
 
 		Double price = service.romanPrice(days);
 
-		Assert.isTrue(Double.valueOf(3.0).equals(price));
+		Assert.isTrue(Double.valueOf(3.0).equals(price), "Should return 3.0!");
 	}
 
 	@Test
@@ -40,16 +40,7 @@ public class RomanPriceServiceImplTest {
 
 		Double price = service.romanPrice(days);
 
-		Assert.isTrue(Double.valueOf(4.4 - 1.0).equals(price));
-	}
-
-	@Test
-	public void shouldReturnFiveOnRomanV() {
-		long days = 5;
-
-		Double price = service.romanPrice(days);
-
-		Assert.isTrue(Double.valueOf(4.4).equals(price));
+		Assert.isTrue(Double.valueOf(4.4 - 1.0).equals(price), "Should return 3.4!");
 	}
 
 	@Test
@@ -58,7 +49,7 @@ public class RomanPriceServiceImplTest {
 
 		Double price = service.romanPrice(days);
 
-		Assert.isTrue(Double.valueOf(4.4).equals(price));
+		Assert.isTrue(Double.valueOf(4.4).equals(price), "Should return 4.4!");
 	}
 
 	@Test
@@ -67,7 +58,7 @@ public class RomanPriceServiceImplTest {
 
 		Double price = service.romanPrice(days);
 
-		Assert.isTrue(Double.valueOf(4.4 + 2.0).equals(price));
+		Assert.isTrue(Double.valueOf(4.4 + 2.0).equals(price), "Should return 6.4!");
 	}
 
 	@Test
@@ -76,7 +67,7 @@ public class RomanPriceServiceImplTest {
 
 		Double price = service.romanPrice(days);
 
-		Assert.isTrue(Double.valueOf(8.4 - 1.0).equals(price));
+		Assert.isTrue(Double.valueOf(8.4 - 1.0).equals(price), "Should return 7.4!");
 	}
 
 	@Test
@@ -85,7 +76,7 @@ public class RomanPriceServiceImplTest {
 
 		Double price = service.romanPrice(days);
 
-		Assert.isTrue(Double.valueOf(8.4 + 4.4 - 1.0).equals(price));
+		Assert.isTrue(Double.valueOf(8.4 + 4.4 - 1.0).equals(price), "Should return 8.4 + 4.4 - 1.0!");
 	}
 
 	@Test
@@ -94,7 +85,8 @@ public class RomanPriceServiceImplTest {
 
 		Double price = service.romanPrice(days);
 
-		Assert.isTrue(Double.valueOf((3.0 * 8.4) + (8.4 - 1.0)).equals(price));
+		Assert.isTrue(Double.valueOf((3.0 * 8.4) + (8.4 - 1.0)).equals(price),
+				"Should return (3.0 * 8.4) + (8.4 - 1.0)!");
 	}
 
 	@Test
@@ -103,7 +95,7 @@ public class RomanPriceServiceImplTest {
 
 		Double price = service.romanPrice(days);
 
-		Assert.isTrue(Double.valueOf((39.0 - 8.4) + 1.0).equals(price));
+		Assert.isTrue(Double.valueOf((39.0 - 8.4) + 1.0).equals(price), "Should return (39.0 - 8.4) + 1.0");
 	}
 
 	@Test
