@@ -18,10 +18,12 @@ public class QuoteCalculationService {
 	public static final Logger LOG = LoggerFactory.getLogger(QuoteCalculationService.class);
 
 	private AgeToRiskService ageToRiskService;
+	private RomanPriceService romanPriceService;
 
 	@Autowired
-	public QuoteCalculationService(final AgeToRiskService ageToRiskService) {
+	public QuoteCalculationService(final AgeToRiskService ageToRiskService, final RomanPriceService romanPriceService) {
 		this.ageToRiskService = ageToRiskService;
+		this.romanPriceService = romanPriceService;
 	}
 
 	public Double calculateQuote(final QuoteModel request) {
@@ -36,7 +38,6 @@ public class QuoteCalculationService {
 		long dateDiff = Math.abs(ChronoUnit.DAYS.between(returnDate, departure));
 
 		Double sumOfRisks = 0.0;
-
 
 		for (int age : travellerAges) {
 			Double risk = ageToRiskService.getRiskForAge(age);
@@ -57,8 +58,9 @@ public class QuoteCalculationService {
 		LOG.info("SumOfOptions: " + sumOfOptions);
 		LOG.info("Country: " + request.getCountry());
 
-		
-		Double result = (request.getCover().getAmount() * country * sumOfRisks * dateDiff) + sumOfOptions;
+		Double romanPrice = romanPriceService.romanPrice(dateDiff);
+
+		Double result = (request.getCover().getAmount() * country * sumOfRisks * romanPrice) + sumOfOptions;
 
 		if (getFamilyDiscount(travellerAges)) {
 			result = result * 0.8; // 20% Discount for Families
