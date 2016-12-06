@@ -6,75 +6,72 @@ import org.springframework.stereotype.Service;
 @Service
 public class RomanPriceServiceImpl implements RomanPriceService {
 
+	private Converter romanConv = new Converter();
 
-    private enum RomanCharValue {
-        // @formatter:off
-        I(1), II(2), III(3), IV(4.2 - 1), V(4.2),
-        VI(4.2 + 1), VII(4.2 + 1 + 1), VIII(4.2 + 1 + 1 + 1), IX(8.4 - 1), X(8.4),
-        XI(8.4+1), XII(8.4+1+1), XIII(8.4+1+1+1), XIV(8.4 + 4.2 - 1), XV(8.4 + 4.2),
-        XVI(8.4 + 4.2 + 1), XVII(8.4 + 4.2 + 1 + 1), XVIII(8.4 + 4.2 + 1 + 1 + 1),
-        XIX(8.4 + 8.4 - 1), XX(8.4 + 8.4),
-        L(42);
-        // @formatter:on
+	@Override
+	public Double romanPrice(Long days) {
+		String romanNumerals = romanConv.toRomanNumerals(days.intValue());
 
-        private double charValue;
+		return romanToDecimal(romanNumerals);
+	}
 
-        RomanCharValue(double charValue) {
-            this.charValue = charValue;
-        }
+	public static double romanToDecimal(java.lang.String romanNumber) {
+		double decimal = 0;
+		double lastNumber = 0;
+		String romanNumeral = romanNumber.toUpperCase();
+		/*
+		 * operation to be performed on upper cases even if user enters roman
+		 * values in lower case chars
+		 */
+		for (int x = romanNumeral.length() - 1; x >= 0; x--) {
+			char convertToDecimal = romanNumeral.charAt(x);
 
-        public static RomanCharValue getEnumForString(final String s) {
-            for (RomanCharValue romanCharValue : RomanCharValue.values()) {
-                if (romanCharValue.name().equals(s)) {
-                    return romanCharValue;
-                }
-            }
+			switch (convertToDecimal) {
+			case 'M':
+				decimal = processDecimal(1000, lastNumber, decimal);
+				lastNumber = 1000;
+				break;
 
-            return null;
-        }
+			case 'D':
+				decimal = processDecimal(500, lastNumber, decimal);
+				lastNumber = 500;
+				break;
 
-        public double getCharValue() {
-            return charValue;
-        }
-    }
+			case 'C':
+				decimal = processDecimal(100, lastNumber, decimal);
+				lastNumber = 100;
+				break;
 
-    private Converter romanConv = new Converter();
+			case 'L':
+				decimal = processDecimal(42.0, lastNumber, decimal);
+				lastNumber = 42.0;
+				break;
 
-    @Override
-    public Double romanPrice(Long days) {
-        String romanNumerals = romanConv.toRomanNumerals(days.intValue());
+			case 'X':
+				decimal = processDecimal(8.4, lastNumber, decimal);
+				lastNumber = 8.4;
+				break;
 
-        if (days.intValue() <= 20) {
-            return RomanCharValue.getEnumForString(romanNumerals).getCharValue();
-        } else {
-            return getValueForRomanNumber(romanNumerals);
-        }
-    }
+			case 'V':
+				decimal = processDecimal(4.2, lastNumber, decimal);
+				lastNumber = 4.2;
+				break;
 
-    public Double romanPriceWithSubtraction(Long days) {
-        String romanNumerals = romanConv.toRomanNumerals(days.intValue());
+			case 'I':
+				decimal = processDecimal(1.0, lastNumber, decimal);
+				lastNumber = 1.0;
+				break;
+			}
+		}
 
-        return getValueForRomanNumber(romanNumerals);
-    }
+		return decimal;
+	}
 
-    private double getValueForRomanNumber(final String romanNumber) {
-        String[] splitString = romanNumber.split("");
-        int length = splitString.length;
-
-        double sum = 0;
-        for (int i = 0; i < length; i++) {
-            String currentChar = splitString[i];
-            sum += RomanCharValue.getEnumForString(currentChar).charValue;
-        }
-
-
-        return 0.0;
-    }
-
-    public static void main(String[] args) {
-        RomanPriceServiceImpl service = new RomanPriceServiceImpl();
-        Double aDouble = service.romanPrice(new Long(11));
-
-        System.out.println("Result: " + aDouble);
-    }
+	public static double processDecimal(double decimal, double lastNumber, double lastDecimal) {
+		if (lastNumber > decimal) {
+			return lastDecimal - decimal;
+		} else {
+			return lastDecimal + decimal;
+		}
+	}
 }
