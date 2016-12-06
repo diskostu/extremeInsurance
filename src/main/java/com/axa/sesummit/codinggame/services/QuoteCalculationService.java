@@ -1,17 +1,16 @@
 package com.axa.sesummit.codinggame.services;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
+import com.axa.sesummit.codinggame.model.Country;
+import com.axa.sesummit.codinggame.model.QuoteModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.axa.sesummit.codinggame.model.Country;
-import com.axa.sesummit.codinggame.model.QuoteModel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class QuoteCalculationService {
@@ -32,12 +31,14 @@ public class QuoteCalculationService {
 
 		LocalDate departure = request.getDepartureDate();
 		LocalDate returnDate = request.getReturnDate();
+		final List<Integer> travellerAges = request.getTravellerAges();
 
 		long dateDiff = Math.abs(ChronoUnit.DAYS.between(returnDate, departure));
 
 		Double sumOfRisks = 0.0;
 
-		for (int age : request.getTravellerAges()) {
+
+		for (int age : travellerAges) {
 			Double risk = ageToRiskService.getRiskForAge(age);
 
 			LOG.info("\tRISK: " + risk);
@@ -59,19 +60,19 @@ public class QuoteCalculationService {
 		
 		Double result = (request.getCover().getAmount() * country * sumOfRisks * dateDiff) + sumOfOptions;
 
-		if (getFamilyDiscount(request.getTravellerAges())) {
+		if (getFamilyDiscount(travellerAges)) {
 			result = result * 0.8; // 20% Discount for Families
 		}
 
-		if (isChildrenCharge(request.getTravellerAges())) {
+		if (isChildrenCharge(travellerAges)) {
 			result = result * 1.15; // 15% Family charges
 		}
 
-		if (isYoungCouples(request.getTravellerAges()) || isYoungAdultGroup(request.getTravellerAges())) {
+		if (isYoungCouples(travellerAges) || isYoungAdultGroup(travellerAges)) {
 			result = result * 0.9; // 10% for young couples
 		}
 
-		if (isAlone(request.getTravellerAges())) {
+		if (isAlone(travellerAges)) {
 			result = result * 1.05; // 5% penalty for single person
 		}
 
@@ -127,6 +128,11 @@ public class QuoteCalculationService {
 	}
 
 	public boolean isAlone(List<Integer> ageList) {
-		return ageList.size() == 1;
+		if (ageList.size() == 1) {
+			LOG.info("\tA lone traveller!");
+			return true;
+		}
+
+		return false;
 	}
 }
