@@ -18,10 +18,6 @@ public class QuoteCalculationService {
 
 	public static final Logger LOG = LoggerFactory.getLogger(QuoteCalculationService.class);
 
-	public static final Double QUOTE_CONSTANT = 1.8;
-
-	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
 	private AgeToRiskService ageToRiskService;
 
 	@Autowired
@@ -53,14 +49,6 @@ public class QuoteCalculationService {
 
 		Double country = Country.getValueForCode(request.getCountry());
 
-		if (dateDiff <= 7) {
-			dateDiff = 7;
-		}
-
-		if (dateDiff == 8 || dateDiff == 9) {
-			dateDiff = 7;
-		}
-
 		LOG.info("Cover: " + request.getCover().getAmount());
 		LOG.info("Country:" + country);
 		LOG.info("SumOfRisks: " + sumOfRisks);
@@ -68,6 +56,7 @@ public class QuoteCalculationService {
 		LOG.info("SumOfOptions: " + sumOfOptions);
 		LOG.info("Country: " + request.getCountry());
 
+		
 		Double result = (request.getCover().getAmount() * country * sumOfRisks * dateDiff) + sumOfOptions;
 
 		if (getFamilyDiscount(request.getTravellerAges())) {
