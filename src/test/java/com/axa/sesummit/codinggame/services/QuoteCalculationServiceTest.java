@@ -1,13 +1,7 @@
 package com.axa.sesummit.codinggame.services;
 
-import com.axa.sesummit.codinggame.model.Cover;
-import com.axa.sesummit.codinggame.model.QuoteRequest;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import java.time.LocalDate;
-import java.util.Arrays;
 
 public class QuoteCalculationServiceTest {
 
@@ -32,4 +26,6 @@ public class QuoteCalculationServiceTest {
 		// QuoteCalculationService().calculateQuote(request);
 		// Assert.assertEquals(Double.valueOf(108.0), result);
 	}
+	
+	
 }
